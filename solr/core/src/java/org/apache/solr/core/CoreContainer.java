@@ -242,12 +242,7 @@ public class CoreContainer {
 
     // Initialize the filter
     if (pluginClassName != null) {
-      try {
-        Class cl = Class.forName(pluginClassName);
-        authenticationPlugin = (AuthenticationPlugin) cl.newInstance();
-      } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-        throw new SolrException(ErrorCode.SERVER_ERROR, e);
-      }
+      authenticationPlugin = getResourceLoader().newInstance((String) pluginClassName, AuthenticationPlugin.class);
     }
     if (authenticationPlugin != null) {
       authenticationPlugin.init(authenticationConfig);
